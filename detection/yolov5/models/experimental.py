@@ -93,7 +93,13 @@ def attempt_load(weights, map_location=None, inplace=True, fuse=True):
     # Loads an ensemble of models weights=[a,b,c] or a single model weights=[a] or weights=a
     model = Ensemble()
     for w in weights if isinstance(weights, list) else [weights]:
-        ckpt = torch.load(attempt_download(w), map_location=map_location)  # load
+        # dùng add_safe_globals + weights_only=False để tránh lỗi PyTorch 2.6+
+        with torch.serialization.add_safe_globals([Model]):
+            ckpt = torch.load(
+                attempt_download(w),
+                map_location=map_location,
+                weights_only=False  # load toàn bộ model
+            )
         ckpt = (ckpt.get('ema') or ckpt['model']).float()  # FP32 model
         model.append(ckpt.fuse().eval() if fuse else ckpt.eval())  # fused or un-fused model in eval mode
 
@@ -120,3 +126,4 @@ def attempt_load(weights, map_location=None, inplace=True, fuse=True):
         model.stride = model[torch.argmax(torch.tensor([m.stride.max() for m in model])).int()].stride  # max stride
         assert all(model[0].nc == m.nc for m in model), f'Models have different class counts: {[m.nc for m in model]}'
         return model  # return ensemble
+
