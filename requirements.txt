@@ -2,7 +2,7 @@ wheel
 pytorch-metric-learning>=2.0.0
 efficientnet_pytorch>=0.7.0
 pretrainedmodels>=0.7.4
-numpy>=1.25
+numpy<2          # Hạ NumPy xuống <2 để tránh lỗi cython_bbox
 pandas>=1.5
 scipy>=1.10
 matplotlib>=3.8

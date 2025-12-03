@@ -1,7 +1,7 @@
 OUTPUT_DIR: "output/mot_highway"
 FONTSIZE: 11
 MOT:
-  VIDEO: "datasets/video-1.mp4"
+  VIDEO: "datasets/camera-3.mp4"
   REID_MODEL_OPTS: "models/resnet50_mixstyle/opts.yaml"
   REID_MODEL_CKPT: "models/resnet50_mixstyle/net_19.pth"
   CALIBRATION: "config/examples/highway_calibration.txt"
