@@ -9,7 +9,11 @@ def load_yolo(which):
     yolo_dir = str(Path(__file__).parent.joinpath("yolov5"))
     os.chdir(yolo_dir)
 
-    # Thêm trust_repo=True để tránh lỗi weights_only với PyTorch >=2.6
+    # Patch để PyTorch >=2.6 load checkpoint YOLOv5
+    from detection.yolov5.models.yolo import Model
+    torch.serialization.add_safe_globals([Model])
+
+    # Load model bình thường
     model = torch.hub.load(yolo_dir, which, source="local", trust_repo=True)
 
     os.chdir(str(cwd))
