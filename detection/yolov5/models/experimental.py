@@ -90,40 +90,37 @@ class Ensemble(nn.ModuleList):
 def attempt_load(weights, map_location=None, inplace=True, fuse=True):
     from models.yolo import Detect, Model
 
-    # Loads an ensemble of models weights=[a,b,c] or a single model weights=[a] or weights=a
     model = Ensemble()
     for w in weights if isinstance(weights, list) else [weights]:
-        # dùng add_safe_globals + weights_only=False để tránh lỗi PyTorch 2.6+
-        with torch.serialization.add_safe_globals([Model]):
-            ckpt = torch.load(
-                attempt_download(w),
-                map_location=map_location,
-                weights_only=False  # load toàn bộ model
-            )
-        ckpt = (ckpt.get('ema') or ckpt['model']).float()  # FP32 model
-        model.append(ckpt.fuse().eval() if fuse else ckpt.eval())  # fused or un-fused model in eval mode
+        # Load trực tiếp, weights_only=False
+        ckpt = torch.load(
+            attempt_download(w),
+            map_location=map_location,
+            weights_only=False  # load toàn bộ model, không dùng add_safe_globals
+        )
+        ckpt = (ckpt.get('ema') or ckpt['model']).float()
+        model.append(ckpt.fuse().eval() if fuse else ckpt.eval())
 
     # Compatibility updates
     for m in model.modules():
         t = type(m)
         if t in (nn.Hardswish, nn.LeakyReLU, nn.ReLU, nn.ReLU6, nn.SiLU, Detect, Model):
-            m.inplace = inplace  # torch 1.7.0 compatibility
+            m.inplace = inplace
             if t is Detect:
-                if not isinstance(m.anchor_grid, list):  # new Detect Layer compatibility
+                if not isinstance(m.anchor_grid, list):
                     delattr(m, 'anchor_grid')
                     setattr(m, 'anchor_grid', [torch.zeros(1)] * m.nl)
         elif t is Conv:
-            m._non_persistent_buffers_set = set()  # torch 1.6.0 compatibility
+            m._non_persistent_buffers_set = set()
         elif t is nn.Upsample and not hasattr(m, 'recompute_scale_factor'):
-            m.recompute_scale_factor = None  # torch 1.11.0 compatibility
+            m.recompute_scale_factor = None
 
     if len(model) == 1:
-        return model[-1]  # return model
+        return model[-1]
     else:
-        print(f'Ensemble created with {weights}\n')
         for k in 'names', 'nc', 'yaml':
             setattr(model, k, getattr(model[0], k))
-        model.stride = model[torch.argmax(torch.tensor([m.stride.max() for m in model])).int()].stride  # max stride
+        model.stride = model[torch.argmax(torch.tensor([m.stride.max() for m in model])).int()].stride
         assert all(model[0].nc == m.nc for m in model), f'Models have different class counts: {[m.nc for m in model]}'
-        return model  # return ensemble
+        return model
 
