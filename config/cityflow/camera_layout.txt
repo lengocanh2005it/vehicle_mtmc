@@ -1,0 +1,25 @@
+# Camera layout for 3 cameras
+
+fps
+10.0 10.0 10.0
+
+scales
+1.0 1.0 1.0
+
+offset
+0 0 0
+
+compatibility
+0 1 1
+1 0 1
+1 1 0
+
+dtmin
+0 -7 -7
+-7 0 -7
+-7 -7 0
+
+dtmax
+0 7 7
+7 0 7
+7 7 0

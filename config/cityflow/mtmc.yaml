@@ -1,0 +1,17 @@
+OUTPUT_DIR: "/kaggle/working/vehicle_mtmc/output/cityflow_mtmc_eval"
+MTMC:
+  CAMERA_LAYOUT: "/kaggle/working/vehicle_mtmc/config/cityflow/camera_layout.txt"
+  PICKLED_TRACKLETS:
+    - "output/cityflow/camera-1/mot.pkl"
+    - "output/cityflow/camera-2/mot.pkl"
+    - "output/cityflow/camera-3/mot.pkl"
+  LINKAGE: "single"
+  MIN_SIM: 0.5
+EVAL:
+  MIN_IOU: 0.35
+  IGNORE_FPS: true
+  DROP_SINGLE_CAM: true
+  GROUND_TRUTHS:
+    - "datasets/train/camera-1/gt/gt.txt"
+    - "datasets/train/camera-2/gt/gt.txt"
+    - "datasets/train/camera-3/gt/gt.txt"
