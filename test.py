@@ -1,38 +1,17 @@
-import cv2
+import pickle
+from mtmc.multicam_tracklet import MulticamTracklet
 
-input_video = "datasets/IMG_4015.MOV"
-output_video = "video_cut.mp4"
+file_path = "output/cityflow_mtmc_eval/mtmc_tracklets.pkl"
 
-# Thời gian bắt đầu và kết thúc: phút + giây
-start_minute, start_second = 0, 49
-end_minute, end_second = 10, 49 
+with open(file_path, "rb") as f:
+    mtmc_tracks = pickle.load(f)
 
-# Chuyển sang giây
-start_time = start_minute * 60 + start_second
-end_time = end_minute * 60 + end_second
+# Tạo set chứa tất cả camera ID
+camera_ids = set()
 
-cap = cv2.VideoCapture(input_video)
+for mtrack in mtmc_tracks:
+    for track in mtrack.tracks:
+        camera_ids.add(track.cam)
 
-fps = cap.get(cv2.CAP_PROP_FPS)
-start_frame = int(start_time * fps)
-end_frame = int(end_time * fps)
-
-fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-out = cv2.VideoWriter(output_video, fourcc, fps, (width, height))
-
-current_frame = 0
-while True:
-    ret, frame = cap.read()
-    if not ret:
-        break
-    if start_frame <= current_frame <= end_frame:
-        out.write(frame)
-    elif current_frame > end_frame:
-        break
-    current_frame += 1
-
-cap.release()
-out.release()
-cv2.destroyAllWindows()
+print(f"Tổng số camera ID: {len(camera_ids)}")
+print("Các camera ID:", sorted(camera_ids))
