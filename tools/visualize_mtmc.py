@@ -32,7 +32,7 @@ def visualize_camera(camera_id, mtmc_tracks, video_path, output_path):
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     out = cv2.VideoWriter(
         output_path,
-        cv2.VideoWriter_fourcc(*"MJPG"),  # codec tương thích
+        cv2.VideoWriter_fourcc(*"mp4v"),  # tương thích MP4
         fps,
         (w, h)
     )
