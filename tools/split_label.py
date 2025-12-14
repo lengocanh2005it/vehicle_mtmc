@@ -29,7 +29,7 @@ def split_mot_file(input_path, output_small_path, output_large_path, threshold=3
 
 
 split_mot_file(
-    "0_mot.txt",
+    "mot_out.txt",
     "mot_part1.txt",
     "mot_part2.txt",
     threshold=3000

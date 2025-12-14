@@ -41,10 +41,10 @@ def cut_video_opencv(input_path, output_path, start_min, start_sec, end_min, end
 # Ví dụ dùng
 if __name__ == "__main__":
     cut_video_opencv(
-        input_path="input.mp4",
-        output_path="output_cut_opencv.mp4",
+        input_path="./datasets/train/camera-1.mp4",
+        output_path="./datasets/train/train-camera-1.mp4",
         start_min=5,
-        start_sec=6,
-        end_min=8,
-        end_sec=30
+        start_sec=0,
+        end_min=10,
+        end_sec=0
     )
