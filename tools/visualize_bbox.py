@@ -2,7 +2,7 @@ import cv2
 import pandas as pd
 import os
 
-frame_folder = "cam3"
+frame_folder = "datasets/frames/cam1"
 mot_file = "mot_part1.txt"
 output_video = "visual_bbox.avi"
 
