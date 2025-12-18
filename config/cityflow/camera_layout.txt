@@ -5,7 +5,7 @@ scales
 1.0 1.0 1.0
 
 offset
-6 0 0 
+0 0 0 
 
 compatibility
 0 0 0 
