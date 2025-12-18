@@ -1,4 +1,5 @@
 OUTPUT_DIR: "/kaggle/working/vehicle_mtmc/output/cityflow_mtmc_eval"
+
 MTMC:
   CAMERA_LAYOUT: "/kaggle/working/vehicle_mtmc/config/cityflow/camera_layout.txt"
   PICKLED_TRACKLETS:
@@ -7,8 +8,8 @@ MTMC:
     - "output/cityflow/camera-3/mot.pkl"
   LINKAGE: "single"
   MIN_SIM: 0.5
+
 EVAL:
   MIN_IOU: 0.35
-  IGNORE_FPS: true
   DROP_SINGLE_CAM: true
   GROUND_TRUTHS: []
