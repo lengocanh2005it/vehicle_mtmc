@@ -1,7 +1,7 @@
 OUTPUT_DIR: "/kaggle/working/vehicle_mtmc/output/mot_highway"
 FONTSIZE: 11
 MOT:
-  VIDEO: /kaggle/working/vehicle_mtmc/datasets/cam-3.mp4
+  VIDEO: /kaggle/working/vehicle_mtmc/datasets/cam-1.mp4
   REID_MODEL_OPTS: "/kaggle/working/vehicle_mtmc/models/resnet50_mixstyle/opts.yaml"
   REID_MODEL_CKPT: "/kaggle/working/vehicle_mtmc/models/resnet50_mixstyle/net_19.pth"
   CALIBRATION: "/kaggle/working/vehicle_mtmc/config/examples/highway_calibration.txt"
