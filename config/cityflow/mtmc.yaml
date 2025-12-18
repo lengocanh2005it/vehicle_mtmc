@@ -11,7 +11,4 @@ EVAL:
   MIN_IOU: 0.35
   IGNORE_FPS: true
   DROP_SINGLE_CAM: true
-  GROUND_TRUTHS:
-    - "datasets/train/camera-1/gt/gt.txt"
-    - "datasets/train/camera-2/gt/gt.txt"
-    - "datasets/train/camera-3/gt/gt.txt"
+  GROUND_TRUTHS: []
