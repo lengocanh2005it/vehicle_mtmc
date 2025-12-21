@@ -1,7 +1,7 @@
 import cv2
 import os
 
-video_path = "./datasets/train/cam3-5p-dau.mp4" 
+video_path = "./datasets/train/10fps-cam3-5p-sau.mp4" 
 output_folder = "images"   
 os.makedirs(output_folder, exist_ok=True)
 

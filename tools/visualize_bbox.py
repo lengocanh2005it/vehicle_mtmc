@@ -2,12 +2,20 @@ import cv2
 import pandas as pd
 import os
 
-frame_folder = "datasets/frames/cam1"
-mot_file = "mot_part1.txt"
+frame_folder = "datasets/frames/cam3"
+mot_file = "mot_out.txt"
 output_video = "visual_bbox.avi"
 
-# Load nhãn
-df = pd.read_csv(mot_file, header=None)
+# --- Kiểm tra các dòng lỗi ---
+print("Checking lines with unexpected number of columns...")
+with open(mot_file) as f:
+    for i, line in enumerate(f):
+        # MOT format chuẩn: 10 cột => 9 dấu phẩy
+        if line.count(',') != 9:
+            print(f"Line {i+1} có số cột khác: {line.strip()}")
+
+# --- Load nhãn, bỏ các dòng lỗi ---
+df = pd.read_csv(mot_file, header=None, on_bad_lines='skip')
 df = df.dropna()
 
 # bỏ dòng object_id = -1 (ở cột 1)
@@ -20,7 +28,7 @@ height, width = frame.shape[:2]
 
 # VideoWriter
 fourcc = cv2.VideoWriter_fourcc(*'XVID')
-out = cv2.VideoWriter(output_video, fourcc, 20.0, (width, height))
+out = cv2.VideoWriter(output_video, fourcc, 10.0, (width, height))
 
 # Lặp qua từng frame_id
 frame_ids = sorted(df[0].unique())
@@ -38,7 +46,7 @@ for fid in frame_ids:
     objs = df[df[0] == fid]
 
     for _, row in objs.iterrows():
-        track_id = int(row[1])       # đúng: track_id ở cột 1
+        track_id = int(row[1])       # track_id ở cột 1
         x = int(row[2])              # bbox x
         y = int(row[3])              # bbox y
         w = int(row[4])              # bbox width
