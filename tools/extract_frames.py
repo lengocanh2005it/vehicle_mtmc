@@ -1,8 +1,8 @@
 import cv2
 import os
 
-video_path = "./datasets/train/10fps-cam3-5p-sau.mp4" 
-output_folder = "images"   
+video_path = "./datasets/cam1.mp4" 
+output_folder = "./datasets/frames/cam1"   
 os.makedirs(output_folder, exist_ok=True)
 
 cap = cv2.VideoCapture(video_path)

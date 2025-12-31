@@ -8,7 +8,7 @@ from sklearn.model_selection import train_test_split
 # -----------------------------
 cams = ['cam1','cam2','cam3']
 data_root = 'datasets/frames'  # folder chứa frames/cam1, cam2, cam3
-save_root = 'datasets/Vehicle-ReID'
+save_root = 'datasets/test'
 max_frame_per_cam = 5        # tối đa 5 frame/object/camera
 min_total_per_object = 10    # mỗi object train ít nhất 10 frame
 max_total_per_object = 20    # mỗi object train tối đa 20 frame
