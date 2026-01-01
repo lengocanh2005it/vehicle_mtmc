@@ -47,7 +47,9 @@ def concat_videos_opencv(
 
 # Ví dụ
 concat_videos_opencv(
-    video_paths=["datasets/train/cam1_tmp.mp4", "datasets/train/video-1.mp4"],
-    output_path="merged_video.mp4",
+    video_paths=["./cam3_out.mp4", "./cam3_out_1.mp4"],
+    output_path="merged_video_3.mp4",
     target_fps=10
 )
+
+# 21:06 -> 29:06
